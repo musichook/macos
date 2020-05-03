@@ -127,10 +127,20 @@
 		
 		
 		
-		
-		
+# Try It
+## Best
+* Bubble Translate
+* Numi
+	
+## Maybe
+* Soda Player (torrents-player)
+* Yoink (as a Dropzone)
+* iA Writer
 
-			
+* Adguard
+* 1Blocker
+
+		
 			
 
 	
