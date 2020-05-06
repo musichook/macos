@@ -144,7 +144,7 @@
 
 # Notes
 
-## Ruby/ gem / cocoapods
+## Ruby / gem / cocoapods
 Error on:
 ```
 sudo gem install cocoapods
@@ -170,7 +170,37 @@ For pkg-config to find ruby you may need to set:
 ```
 export PKG_CONFIG_PATH="/usr/local/opt/ruby/lib/pkgconfig"
 ```
-			
+
+If not helped:
+
+For Xcode 11 on macOS 10.14, this can happen even after installing Xcode and installing command-line tools and accepting the license with
+```
+sudo xcode-select --install
+sudo xcodebuild -license accept
+```
+The issue is that Xcode 11 ships the macOS 10.15 SDK which includes headers for ruby2.6, but not for macOS 10.14's ruby2.3. You can verify that this is your problem by running
+```
+ruby -rrbconfig -e 'puts RbConfig::CONFIG["rubyhdrdir"]'
+```
+which on macOS 10.14 with Xcode 11 prints the non-existent path
+```
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Ruby.framework/Versions/2.3/usr/include/ruby-2.3.0
+```
+However, Xcode 11 installs a macOS 10.14 SDK within /Library/Developer/CommandLineTools/SDKs/MacOS10.14.sdk. It isn't necessary to pollute the system directories by installing the old header files as suggested in other answers. Instead, by selecting that SDK, the appropriate ruby2.3 headers will be found:
+```
+sudo xcode-select --switch /Library/Developer/CommandLineTools
+ruby -rrbconfig -e 'puts RbConfig::CONFIG["rubyhdrdir"]'
+```
+This should now correctly print
+```
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/Ruby.framework/Versions/2.3/usr/include/ruby-2.3.0
+```
+Likewise, ```gem install``` should work while that SDK is selected.
+
+To switch back to using the current Xcode 11 SDK, use
+```
+sudo xcode-select --switch /Applications/Xcode.app
+```		
 
 	
 	
