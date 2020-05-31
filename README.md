@@ -94,6 +94,7 @@
 * LastPass.app	
 * XLD.app
 * coconutBattery.app
+* DriveDx
 
 ### Rare
 * freeshuttercounter.app
