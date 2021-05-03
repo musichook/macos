@@ -95,6 +95,8 @@
 * XLD.app
 * coconutBattery.app
 * DriveDx
+* Bartender
+
 
 ### Rare
 * freeshuttercounter.app
